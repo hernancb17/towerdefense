@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://c14pnh8v6v1ur"]
+
+[ext_resource type="Script" path="res://scripts/enemy scripts/enemy_path.gd" id="1_ogc3s"]
+
+[node name="EnemyPath" type="PathFollow2D"]
+position = Vector2(-9, -79)
+rotation = 1.5708
+loop = false
+script = ExtResource("1_ogc3s")

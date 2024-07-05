@@ -1,0 +1,98 @@
+[gd_scene load_steps=13 format=3 uid="uid://bkyhvs4pevmq"]
+
+[ext_resource type="Texture2D" uid="uid://bwhdpxk2jbauc" path="res://assets/sprites/tower.png" id="1_ciqor"]
+[ext_resource type="Script" path="res://scripts/tower.gd" id="1_uvdln"]
+[ext_resource type="PackedScene" uid="uid://ckkylvgfq2xyr" path="res://scenes/projectile.tscn" id="2_m5nid"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2i6ck"]
+atlas = ExtResource("1_ciqor")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hqdjs"]
+atlas = ExtResource("1_ciqor")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5o8js"]
+atlas = ExtResource("1_ciqor")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o2nul"]
+atlas = ExtResource("1_ciqor")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jwyk8"]
+atlas = ExtResource("1_ciqor")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q3pm2"]
+atlas = ExtResource("1_ciqor")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_siwp4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2i6ck")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hqdjs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5o8js")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o2nul")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jwyk8")
+}],
+"loop": true,
+"name": &"Shooting",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q3pm2")
+}],
+"loop": true,
+"name": &"StandBy",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y0yg1"]
+radius = 28.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_75sxj"]
+radius = 5.09902
+
+[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("detection_area")]
+script = ExtResource("1_uvdln")
+detection_area = NodePath("Range")
+projectile_scene = ExtResource("2_m5nid")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_siwp4")
+animation = &"StandBy"
+autoplay = "StandBy"
+frame_progress = 0.466242
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(37, 0)
+
+[node name="Range" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Range"]
+shape = SubResource("CircleShape2D_y0yg1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 0)
+shape = SubResource("CircleShape2D_75sxj")
+
+[node name="ShootingDelay" type="Timer" parent="."]
+wait_time = 0.5
+
+[connection signal="area_entered" from="Range" to="." method="_on_range_area_entered"]
+[connection signal="area_exited" from="Range" to="." method="_on_range_area_exited"]
+[connection signal="timeout" from="ShootingDelay" to="." method="_on_shooting_delay_timeout"]

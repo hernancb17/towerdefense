@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://c3skc6y66763y"]
+
+[ext_resource type="Script" path="res://scripts/Tower scripts/tower panels/mortar_panel.gd" id="1_sevh3"]
+[ext_resource type="PackedScene" uid="uid://dw5ug7qx6hqba" path="res://scenes/tower_scenes/mortar_tower.tscn" id="2_bidvs"]
+[ext_resource type="Texture2D" uid="uid://b5h8yky6m0nc8" path="res://assets/sprites/menu/tower-panel/mortar-icon.png" id="2_mxjih"]
+[ext_resource type="Texture2D" uid="uid://cnhgv1wq5hn0e" path="res://assets/sprites/menu/single-coin.png" id="2_yb4tx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vuwcp"]
+
+[node name="MortarPanel" type="Panel"]
+custom_minimum_size = Vector2(16, 16)
+offset_right = 16.0
+offset_bottom = 16.0
+mouse_force_pass_scroll_events = false
+theme_override_styles/panel = SubResource("StyleBoxFlat_vuwcp")
+script = ExtResource("1_sevh3")
+tower_scene = ExtResource("2_bidvs")
+
+[node name="towerSprite" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(8, 8)
+texture = ExtResource("2_mxjih")
+
+[node name="GoldCost" type="Control" parent="."]
+anchors_preset = 0
+offset_top = 16.0
+offset_right = 16.0
+offset_bottom = 24.0
+
+[node name="CoinSprite" type="Sprite2D" parent="GoldCost"]
+position = Vector2(4, 4)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_yb4tx")
+
+[node name="CostLabel" type="Label" parent="GoldCost"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 11.0
+offset_right = 29.0
+offset_bottom = 45.0
+scale = Vector2(0.188781, 0.173057)
+theme_override_font_sizes/font_size = 32
+text = "3"
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

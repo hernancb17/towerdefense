@@ -1,0 +1,95 @@
+[gd_scene load_steps=12 format=3 uid="uid://de1dg0wihx2yt"]
+
+[ext_resource type="Texture2D" uid="uid://cforos578j0h6" path="res://assets/sprites/menu/coin.png" id="1_ddsup"]
+[ext_resource type="Script" path="res://scripts/UI scripts/CoinLabel.gd" id="2_vpn5p"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_56e3v"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_655xr"]
+atlas = ExtResource("1_ddsup")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tmfmc"]
+atlas = ExtResource("1_ddsup")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ugebg"]
+atlas = ExtResource("1_ddsup")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jlqba"]
+atlas = ExtResource("1_ddsup")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vxykw"]
+atlas = ExtResource("1_ddsup")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1npdc"]
+atlas = ExtResource("1_ddsup")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iwjty"]
+atlas = ExtResource("1_ddsup")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_w0tc7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_655xr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tmfmc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ugebg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jlqba")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vxykw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1npdc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iwjty")
+}],
+"loop": true,
+"name": &"standby",
+"speed": 5.0
+}]
+
+[node name="Gold" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 64.0
+offset_bottom = 24.0
+
+[node name="GoldPanel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 24.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_56e3v")
+
+[node name="CoinSprite" type="AnimatedSprite2D" parent="GoldPanel"]
+position = Vector2(12, 12)
+scale = Vector2(1.5, 1.5)
+sprite_frames = SubResource("SpriteFrames_w0tc7")
+animation = &"standby"
+autoplay = "default"
+
+[node name="CoinLabel" type="Label" parent="GoldPanel"]
+layout_mode = 0
+offset_left = 32.0
+offset_right = 51.0
+offset_bottom = 24.0
+text = "20"
+script = ExtResource("2_vpn5p")

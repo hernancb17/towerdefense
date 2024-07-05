@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://clecemj27coxf"]
+
+[ext_resource type="Script" path="res://scripts/enemy scripts/ProgressBar.gd" id="1_i4u6k"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q8yfd"]
+bg_color = Color(0.913886, 0, 0.183944, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k5twk"]
+bg_color = Color(0.345098, 1, 0.192157, 1)
+
+[node name="HealthBar" type="ProgressBar"]
+offset_left = 3.0
+offset_top = -1.0
+offset_right = 4.0
+offset_bottom = 79.0
+rotation = 1.5708
+scale = Vector2(2.07083, 0.0747359)
+theme_override_styles/background = SubResource("StyleBoxFlat_q8yfd")
+theme_override_styles/fill = SubResource("StyleBoxFlat_k5twk")
+max_value = 12.0
+step = 1.0
+value = 12.0
+rounded = true
+fill_mode = 3
+show_percentage = false
+script = ExtResource("1_i4u6k")

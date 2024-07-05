@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://31dqgghu4yo4"]
+
+[ext_resource type="Script" path="res://scenes/crossbow_panel.gd" id="1_ppw4f"]
+[ext_resource type="Texture2D" uid="uid://gwua5x2sk8tj" path="res://assets/sprites/tower Icon1.png" id="1_yabbg"]
+
+[node name="CrossbowPanel" type="Panel"]
+custom_minimum_size = Vector2(64, 64)
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_force_pass_scroll_events = false
+script = ExtResource("1_ppw4f")
+
+[node name="towerSprite" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(32, 32)
+scale = Vector2(3, 3)
+texture = ExtResource("1_yabbg")
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

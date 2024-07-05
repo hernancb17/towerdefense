@@ -1,0 +1,119 @@
+[gd_scene load_steps=14 format=3 uid="uid://bkyhvs4pevmq"]
+
+[ext_resource type="Script" path="res://scripts/Tower scripts/crossbow_tower.gd" id="1_5b1t5"]
+[ext_resource type="Texture2D" uid="uid://bwhdpxk2jbauc" path="res://assets/sprites/towers/tower.png" id="2_bart4"]
+[ext_resource type="PackedScene" uid="uid://ckkylvgfq2xyr" path="res://scenes/projectiles/arrow_scene.tscn" id="2_ekdtv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s6riq"]
+atlas = ExtResource("2_bart4")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mslfa"]
+atlas = ExtResource("2_bart4")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fcask"]
+atlas = ExtResource("2_bart4")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mgyyi"]
+atlas = ExtResource("2_bart4")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2eoth"]
+atlas = ExtResource("2_bart4")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q3pm2"]
+atlas = ExtResource("2_bart4")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_siwp4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s6riq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mslfa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fcask")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mgyyi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2eoth")
+}],
+"loop": false,
+"name": &"Shooting",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q3pm2")
+}],
+"loop": true,
+"name": &"StandBy",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y0yg1"]
+radius = 59.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_75sxj"]
+radius = 5.09902
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_brpm3"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 58
+corner_radius_top_right = 58
+corner_radius_bottom_right = 58
+corner_radius_bottom_left = 58
+anti_aliasing = false
+
+[node name="CrossbowTower" type="CharacterBody2D" node_paths=PackedStringArray("detection_area")]
+script = ExtResource("1_5b1t5")
+detection_area = NodePath("Range")
+projectile_scene = ExtResource("2_ekdtv")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_siwp4")
+animation = &"Shooting"
+autoplay = "StandBy"
+frame_progress = 0.374922
+
+[node name="Range" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Range"]
+shape = SubResource("CircleShape2D_y0yg1")
+debug_color = Color(0.989323, 0.852544, 0.906956, 0.42)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 0)
+shape = SubResource("CircleShape2D_75sxj")
+
+[node name="ShootingDelay" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(16, 16)
+offset_left = -59.0
+offset_top = -59.0
+offset_right = 59.0
+offset_bottom = 59.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_brpm3")
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_frame_changed"]
+[connection signal="sprite_frames_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_sprite_frames_changed"]
+[connection signal="area_entered" from="Range" to="." method="_on_range_area_entered"]
+[connection signal="area_exited" from="Range" to="." method="_on_range_area_exited"]
+[connection signal="timeout" from="ShootingDelay" to="." method="_on_shooting_delay_timeout"]

@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://cxgpge4swyf1t"]
+
+[ext_resource type="Script" path="res://scripts/UI scripts/HUD.gd" id="1_o28aw"]
+[ext_resource type="PackedScene" uid="uid://bqd6bfigybc3g" path="res://scenes/tower_panel.tscn" id="2_mkgwu"]
+[ext_resource type="PackedScene" uid="uid://de1dg0wihx2yt" path="res://scenes/gold_panel.tscn" id="3_t5jtj"]
+[ext_resource type="PackedScene" uid="uid://c40eq54y7lanr" path="res://scenes/heart.tscn" id="4_gsrvu"]
+[ext_resource type="PackedScene" uid="uid://c56l3hljvxv2k" path="res://scenes/HUD/wave_button.tscn" id="5_nb3um"]
+
+[node name="HUD" type="CanvasLayer"]
+layer = 4
+script = ExtResource("1_o28aw")
+
+[node name="Towers" parent="." instance=ExtResource("2_mkgwu")]
+offset_left = 264.0
+offset_top = 168.0
+offset_right = 328.0
+offset_bottom = 224.0
+
+[node name="Gold" parent="." instance=ExtResource("3_t5jtj")]
+offset_left = 336.0
+offset_top = 8.0
+offset_right = 400.0
+offset_bottom = 32.0
+
+[node name="Heart" parent="." instance=ExtResource("4_gsrvu")]
+unique_name_in_owner = true
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 72.0
+offset_bottom = 32.0
+
+[node name="WaveButton" parent="." instance=ExtResource("5_nb3um")]
+
+[connection signal="wave_ended" from="." to="WaveButton" method="_on_hud_wave_ended"]
+[connection signal="next_wave" from="WaveButton" to="." method="_on_wave_button_next_wave"]
+[connection signal="start_game" from="WaveButton" to="." method="_on_wave_button_start_game"]

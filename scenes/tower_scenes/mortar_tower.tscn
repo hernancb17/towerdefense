@@ -1,0 +1,126 @@
+[gd_scene load_steps=15 format=3 uid="uid://dw5ug7qx6hqba"]
+
+[ext_resource type="Script" path="res://scripts/Tower scripts/mortar_tower.gd" id="1_s867k"]
+[ext_resource type="PackedScene" uid="uid://dkla2mnygwvjy" path="res://scenes/projectiles/bomb_scene.tscn" id="2_c5kdp"]
+[ext_resource type="PackedScene" uid="uid://ck1tpq4mmiqxr" path="res://scenes/tower_scenes/sell_tower_scene/sell_tower.tscn" id="3_6nyft"]
+[ext_resource type="Texture2D" uid="uid://cesip0v6k3r3r" path="res://assets/sprites/towers/mortar.png" id="3_jpbtg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p3qkh"]
+atlas = ExtResource("3_jpbtg")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_caar0"]
+atlas = ExtResource("3_jpbtg")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i7pqk"]
+atlas = ExtResource("3_jpbtg")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y7ggh"]
+atlas = ExtResource("3_jpbtg")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ligy"]
+atlas = ExtResource("3_jpbtg")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_52nnx"]
+atlas = ExtResource("3_jpbtg")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_siwp4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p3qkh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_caar0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i7pqk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y7ggh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ligy")
+}],
+"loop": true,
+"name": &"shooting",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_52nnx")
+}],
+"loop": true,
+"name": &"standby",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y0yg1"]
+radius = 40.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_75sxj"]
+radius = 5.09902
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_brpm3"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 58
+corner_radius_top_right = 58
+corner_radius_bottom_right = 58
+corner_radius_bottom_left = 58
+anti_aliasing = false
+
+[node name="MortalTower" type="CharacterBody2D" node_paths=PackedStringArray("detection_area")]
+script = ExtResource("1_s867k")
+detection_area = NodePath("Range")
+projectile_scene = ExtResource("2_c5kdp")
+
+[node name="SellTower" parent="." instance=ExtResource("3_6nyft")]
+visible = false
+offset = Vector2(-6, -4)
+transform = Transform2D(1, 0, 0, 1, -6, -4)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -2)
+sprite_frames = SubResource("SpriteFrames_siwp4")
+animation = &"shooting"
+autoplay = "standby"
+frame_progress = 0.295993
+
+[node name="Range" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Range"]
+shape = SubResource("CircleShape2D_y0yg1")
+debug_color = Color(0.989323, 0.852544, 0.906956, 0.42)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_75sxj")
+
+[node name="ShootingDelay" type="Timer" parent="."]
+wait_time = 4.0
+
+[node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(16, 16)
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 41.0
+offset_bottom = 41.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_brpm3")
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="animation_looped" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_looped"]
+[connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_frame_changed"]
+[connection signal="sprite_frames_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_sprite_frames_changed"]
+[connection signal="area_entered" from="Range" to="." method="_on_range_area_entered"]
+[connection signal="area_exited" from="Range" to="." method="_on_range_area_exited"]
+[connection signal="timeout" from="ShootingDelay" to="." method="_on_shooting_delay_timeout"]

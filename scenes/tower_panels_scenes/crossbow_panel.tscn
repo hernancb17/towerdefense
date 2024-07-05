@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3 uid="uid://31dqgghu4yo4"]
+
+[ext_resource type="Script" path="res://scripts/Tower scripts/tower panels/crossbow_panel.gd" id="1_5vl3s"]
+[ext_resource type="Texture2D" uid="uid://gwua5x2sk8tj" path="res://assets/sprites/tower Icon1.png" id="1_uew6r"]
+[ext_resource type="Texture2D" uid="uid://cnhgv1wq5hn0e" path="res://assets/sprites/menu/single-coin.png" id="2_x4u1q"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vuwcp"]
+
+[node name="CrossbowPanel" type="Panel"]
+custom_minimum_size = Vector2(16, 16)
+offset_right = 16.0
+offset_bottom = 16.0
+mouse_force_pass_scroll_events = false
+theme_override_styles/panel = SubResource("StyleBoxFlat_vuwcp")
+script = ExtResource("1_5vl3s")
+
+[node name="towerSprite" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(8, 8)
+texture = ExtResource("1_uew6r")
+
+[node name="GoldCost" type="Control" parent="."]
+anchors_preset = 0
+offset_top = 16.0
+offset_right = 16.0
+offset_bottom = 24.0
+
+[node name="CoinSprite" type="Sprite2D" parent="GoldCost"]
+position = Vector2(4, 4)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_x4u1q")
+
+[node name="CostLabel" type="Label" parent="GoldCost"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 11.0
+offset_right = 29.0
+offset_bottom = 45.0
+scale = Vector2(0.188781, 0.173057)
+theme_override_font_sizes/font_size = 32
+text = "1"
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

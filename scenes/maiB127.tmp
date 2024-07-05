@@ -1,0 +1,101 @@
+[gd_scene load_steps=13 format=3 uid="uid://cqxmn26qeajfe"]
+
+[ext_resource type="Texture2D" uid="uid://pmdbmyisnheu" path="res://assets/sprites/Sprite-0003.png" id="1_hpa6u"]
+[ext_resource type="Script" path="res://scenes/main.gd" id="1_k0xxo"]
+[ext_resource type="Texture2D" uid="uid://baqrxhmuf1a0k" path="res://assets/sprites/bat.png" id="2_wefi3"]
+[ext_resource type="Texture2D" uid="uid://bwhdpxk2jbauc" path="res://assets/sprites/tower.png" id="3_o5hp5"]
+[ext_resource type="Script" path="res://scenes/PathSpawner.gd" id="5_mdofa"]
+[ext_resource type="PackedScene" uid="uid://bkyhvs4pevmq" path="res://scenes/tower.tscn" id="6_5xyta"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_oo8dc"]
+texture = ExtResource("1_hpa6u")
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+1:0/0 = 0
+1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:0/0/physics_layer_0/angular_velocity = 0.0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ja5bc"]
+texture = ExtResource("2_wefi3")
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+1:0/0 = 0
+1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:0/0/physics_layer_0/angular_velocity = 0.0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qxpac"]
+texture = ExtResource("3_o5hp5")
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+1:0/0 = 0
+1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:0/0/physics_layer_0/angular_velocity = 0.0
+2:0/0 = 0
+2:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:0/0/physics_layer_0/angular_velocity = 0.0
+
+[sub_resource type="TileSet" id="TileSet_77yde"]
+tile_layout = 5
+tile_offset_axis = 1
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_oo8dc")
+sources/1 = SubResource("TileSetAtlasSource_ja5bc")
+sources/3 = SubResource("TileSetAtlasSource_qxpac")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ecg7r"]
+radius = 3.0
+
+[sub_resource type="Curve2D" id="Curve2D_8fd3l"]
+bake_interval = 1.0
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -9, -79, 0, 0, 0, 0, -9, 63)
+}
+point_count = 2
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_k0xxo")
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_77yde")
+format = 2
+layer_0/name = "Terrain"
+layer_0/tile_data = PackedInt32Array(65534, 0, 0, 65533, 0, 0, 131069, 0, 0, 196605, 0, 0, 196606, 0, 0, 131070, 0, 0, 262142, 0, 0, 327678, 0, 0, 327677, 0, 0, 262141, 0, 0, -3, 0, 0, -65539, 0, 0, -131075, 0, 0, -131074, 0, 0, -65538, 0, 0, -2, 0, 0, -196608, 0, 0, -131072, 0, 0, -65536, 0, 0, 0, 0, 0, 65536, 0, 0, 131072, 0, 0, 196608, 0, 0, 262144, 0, 0, 262145, 0, 0, 196609, 0, 0, 131073, 0, 0, 65537, 0, 0, 1, 0, 0, -65535, 0, 0, -131071, 0, 0, -196607, 0, 0, 327679, 65536, 0, 262143, 65536, 0, 196607, 65536, 0, 131071, 65536, 0, 65535, 65536, 0, -1, 65536, 0, -65537, 65536, 0, -131073, 65536, 0, -196609, 65536, 0, -262145, 65536, 0, -327680, 0, 0, -262144, 0, 0, -262143, 0, 0, -327679, 0, 0, -262147, 0, 0, -196611, 0, 0, -196610, 0, 0, -262146, 0, 0)
+layer_1/name = "Towers"
+layer_1/tile_data = PackedInt32Array()
+layer_2/name = "Enemies"
+layer_2/tile_data = PackedInt32Array()
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(-8, -7)
+rotation = 1.5708
+scale = Vector2(1.03932, 2.23259)
+ignore_rotation = false
+zoom = Vector2(5, 5)
+
+[node name="SpawnTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 2.0
+autostart = true
+
+[node name="StartTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="Towers" type="Node2D" parent="."]
+
+[node name="CharacterBody2D" parent="Towers" instance=ExtResource("6_5xyta")]
+position = Vector2(7, -20)
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(-9, -79)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_ecg7r")
+
+[node name="PathSpawner" type="Node2D" parent="."]
+script = ExtResource("5_mdofa")
+
+[node name="Path2D" type="Path2D" parent="PathSpawner"]
+curve = SubResource("Curve2D_8fd3l")

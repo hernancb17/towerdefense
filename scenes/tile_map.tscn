@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://fpqo1smo0uf6"]
+
+[ext_resource type="Texture2D" uid="uid://baqrxhmuf1a0k" path="res://assets/sprites/enemies/bat.png" id="1_wxbwl"]
+[ext_resource type="Script" path="res://scripts/World scripts/TileMap.gd" id="3_5qbcu"]
+[ext_resource type="Texture2D" uid="uid://bwhdpxk2jbauc" path="res://assets/sprites/towers/tower.png" id="3_6k64w"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ja5bc"]
+texture = ExtResource("1_wxbwl")
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+1:0/0 = 0
+1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:0/0/physics_layer_0/angular_velocity = 0.0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qxpac"]
+texture = ExtResource("3_6k64w")
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+1:0/0 = 0
+1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:0/0/physics_layer_0/angular_velocity = 0.0
+2:0/0 = 0
+2:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:0/0/physics_layer_0/angular_velocity = 0.0
+
+[sub_resource type="TileSet" id="TileSet_77yde"]
+tile_layout = 5
+tile_offset_axis = 1
+physics_layer_0/collision_layer = 1
+sources/1 = SubResource("TileSetAtlasSource_ja5bc")
+sources/3 = SubResource("TileSetAtlasSource_qxpac")
+
+[node name="TileMap" type="TileMap"]
+tile_set = SubResource("TileSet_77yde")
+format = 2
+layer_0/name = "Terrain"
+layer_1/name = "Towers"
+layer_1/tile_data = PackedInt32Array()
+layer_2/name = "Enemies"
+layer_2/tile_data = PackedInt32Array()
+script = ExtResource("3_5qbcu")
